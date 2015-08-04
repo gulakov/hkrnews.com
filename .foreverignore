@@ -1,0 +1,12 @@
+.git
+.git/**/*
+**/.git/**/*
+db
+db/**/*
+**/db/**/*
+node_modules
+node_modules/**/*
+**/node_modules/**/*
+nohup.out
+public/server.txt
+**/public/server.txt
