@@ -168,7 +168,7 @@ function story(storyURL, commentsURL){
 					cmClass="comment-top";
 
 				var commentText='';
-				$(this).find(".comment font").each(function(){
+				$(this).find(".comment span").each(function(){
 					if($(this).text()!='reply')
 						commentText += $(this).html();
 				})
