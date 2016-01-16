@@ -54,9 +54,8 @@ function next(){
 
 function loadIndex(nextPageURL){
 
-	$.getJSON('http://anyorigin.com/dev/get?url='
-		+'https://news.ycombinator.com/'+nextPageURL+'&callback=?', function(data){
-		data=data.contents;
+	$.get('/get?url=https://news.ycombinator.com/'+nextPageURL, function(data){
+		
 		if (data.replace(/[\r\n]/g, ' ').match(/<body.*>(.*)<\/body>/gi)==null)
 			return;
 
@@ -135,13 +134,15 @@ function story(storyURL, commentsURL){
 		$(".cur").attr("class","")
 	
 	loadTime = (new Date()).getTime();
+	$('#article').attr("src", "");	
+	$("#comments-panel").html("");
+
 	$('#article').attr("src", storyURL);
 
 	$("#comments-panel")[0].scrollTop=0;
 
-	$.getJSON('http://anyorigin.com/dev/get?url='+encodeURIComponent(commentsURL)+'&callback=?', function(data){
-		data=data.contents;
-
+	$.get('/get?url='+encodeURIComponent(commentsURL), function(data){
+		
 		if (data.replace(/[\r\n]/g, ' ').match(/<body.*>(.*)<\/body>/)==null)
 			return;
 
@@ -156,7 +157,6 @@ function story(storyURL, commentsURL){
 
 
 		var commentsDOM = (new DOMParser()).parseFromString(commentsHTML, "text/html");
-		$("#comments-panel").html("");
 		var skip, priorWasTop;
 			$(commentsDOM).find("tr td table tbody tr").each(function(){
 				skip=!skip;
@@ -172,6 +172,9 @@ function story(storyURL, commentsURL){
 					if($(this).text()!='reply')
 						commentText += $(this).html();
 				})
+
+				commentText=commentText.replace(/reply/g,'');
+				//commentText = commentText.html();
 
 				if(commentText.length>2){
 					var userName = $(this).find("span a").first().text();
