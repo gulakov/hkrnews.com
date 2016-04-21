@@ -4404,3 +4404,7 @@ error: restarting script because change changed
 error: Forever detected script was killed by signal: SIGKILL
 error: Script restart attempt #17
 SERVER STARTED 4/21/2016, 6:41:06 PM
+error: restarting script because change changed
+error: Forever detected script was killed by signal: SIGKILL
+error: Script restart attempt #18
+SERVER STARTED 4/21/2016, 6:46:08 PM
