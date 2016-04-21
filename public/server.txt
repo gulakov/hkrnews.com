@@ -4383,3 +4383,24 @@ Connection: ::ffff:66.249.65.215 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P)
 Connection: ::ffff:66.249.65.230 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
 Connection: ::ffff:66.249.65.201 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
 Connection: ::ffff:45.79.87.104 (compatible; Uptimebot/1.0; +http://www.uptime.com/uptimebot)
+error: restarting script because change changed
+error: Forever detected script was killed by signal: SIGKILL
+error: Script restart attempt #14
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: restarting script because change changed
+error: Forever detected script was killed by signal: SIGKILL
+error: Script restart attempt #15
+error: restarting script because change changed
+error: Forever detected script was killed by signal: SIGKILL
+error: Script restart attempt #16
+error: restarting script because change changed
+error: Forever detected script was killed by signal: SIGKILL
+error: Script restart attempt #17
+SERVER STARTED 4/21/2016, 6:41:06 PM
