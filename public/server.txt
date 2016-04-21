@@ -4408,3 +4408,4 @@ error: restarting script because change changed
 error: Forever detected script was killed by signal: SIGKILL
 error: Script restart attempt #18
 SERVER STARTED 4/21/2016, 6:46:08 PM
+Connection: ::ffff:157.55.39.201 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)
