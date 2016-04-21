@@ -20,8 +20,15 @@ $(document).ready(function() {
 	 	console.log("Loaded in "+dif);
 	 	if (dif < 300){
 	 		var id = document.getElementsByClassName("cur")[0].getElementsByTagName("a")[1].id;
+
+	 		console.log("loading "+id)
         	$('#article').attr("src", '/get?url='+id); 
 	 	}
+    });
+
+
+    $('#article').on('error', function () {
+	 	alert()
     });
 
 
@@ -134,10 +141,10 @@ function story(storyURL, commentsURL){
 		$(".cur").attr("class","")
 	
 	loadTime = (new Date()).getTime();
-	$('#article').attr("src", "");	
+	$('#article').attr("src", "about:blank");	
 	$("#comments-panel").html("");
 
-	$('#article').attr("src", storyURL);
+	$('#article').attr("src", '/get?url='+storyURL);
 
 	$("#comments-panel")[0].scrollTop=0;
 

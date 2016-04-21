@@ -9,8 +9,7 @@
   "dependencies": {
     "bypasscors": "^1.2.8",
     "debug": "^2.2.0",
-    "express": "~4.12.4",
-    "node-curl": "^0.3.3"
+    "express": "~4.12.4"
   },
   "repository": {
     "type": "git",
