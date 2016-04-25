@@ -3,10 +3,10 @@ app = express(),
 server = require('http').createServer(app);
 
 //routes
-app.get('/',  function(req, res) {
+app.get('/',  function(req, res, next) {
 
 	console.log("Connection: "+req.ip + " " + req.headers['user-agent'].match(/\([^)]+\)/gi)[0].toString() );
-    return res.sendFile(__dirname +"/public/index.html")
+	next()
 });
 
 app.get('/get', function(req,res){
