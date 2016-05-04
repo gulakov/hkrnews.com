@@ -1,32 +1,55 @@
-var express = require('express'),
-app = express(),
-server = require('http').createServer(app);
+var http = require('http'), fs = require('fs'), urlparse = require('url');
 
-//routes
-app.get('/',  function(req, res, next) {
+http.createServer(function (req,res) {
+	var url = urlparse.parse(req.url);
 
-	console.log("Connection: "+req.ip + " " + req.headers['user-agent'].match(/\([^)]+\)/gi)[0].toString() );
-	next()
-});
+	//res.setHeader("Cache-Control", "public, max-age=" + 1000 * 3600 * 24)
+   	res.writeHead(200);
 
-app.get('/get', function(req,res){
+	if (url.pathname == "/get"){
+		var corsURL = url.query.replace("url=","");
+		corsURL =  urlparse.parse(corsURL);
 
- require('bypasscors')(req.query.url, function(html){
-	    return res.send(html);
-    });
+		
+		require(corsURL.protocol.slice(0,-1)).request({
+		    host: corsURL.host,
+		    path: corsURL.path,
+			method: 'GET',
+		    headers: {
+			    'REFERER': corsURL.host,
+				'user-agent': req.headers['user-agent']
+			  }
+		}, function(response) {
+			var html = '';
+		    
+		    response.on('data', function(chunk) {
+		          html += chunk;
+		    });
+		    response.on('end', function() {
+		    	//spoof the base-url for relative paths on the target page
+				html = (html||"").replace("<head>", "<head><base href='" + corsURL.protocol + "//" + corsURL.host + "/'>")
+				  	
+			    res.write(html);
+				res.end();
+		    });
+		}).on('error', (e) => {
+		  console.log(e.message);
+		}).end();
 
-});
-
-//load public files after index.html
-app.use(express.static(__dirname + '/public'));
-
-//errors
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err.stack);
-});
 
 
-//run server
-server.listen(80);
-console.log("SERVER STARTED " + (new Date().toLocaleString()));
+	} else if ( url.pathname == "/favicon.ico"){
+		res.end();
+
+	} else {
+		fs.createReadStream("index.html").pipe(res, {end: true});;
+
+		console.log("Connection: "+req.connection.remoteAddress + " " + req.headers['user-agent'].match(/\([^)]+\)/gi)[0].toString() )
+
+
+	}
+
+
+}).listen(80, function(){
+	console.log("SERVER STARTED " + new Date().toLocaleString());
+})

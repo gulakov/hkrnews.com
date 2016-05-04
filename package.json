@@ -1,29 +1,15 @@
 {
   "name": "hkrnews.com",
-  "description": "hkrnews",
-  "version": "2.1.0",
+  "description": "hkrnews.com",
+  "version": "2.5.0",
   "scripts": {
-    "start": "nohup forever --minUptime=10 --spinSleepTime=2000 -v -w index.js > public/server.txt &",
-    "start-out": "forever --minUptime=10 --spinSleepTime=2000 -v -w index.js"
-  },
-  "dependencies": {
-    "bypasscors": "^1.2.8",
-    "debug": "^2.2.0",
-    "express": "^4.12.4"
+    "start": "forever --minUptime=10 --spinSleepTime=2000 -e ~/hkrnews.log -o ~/hkrnews.log -a -v -w .",
+    "server": "  nohup npm start >/dev/null 2>&1 &"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gulakov/hkrnews"
+    "url": "https://github.com/gulakov/hkrnews.com"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/gulakov/hkrnews/issues"
-  },
-  "main": "index.js",
-  "devDependencies": {},
-  "keywords": [
-    "bypass",
-    "cors"
-  ],
-  "author": "Alex Gulakov <alexgulakov@gmail.com> (http://github.com/gulakov)"
+  "author": "Alex Gulakov <alexgulakov@gmail.com>"
 }
