@@ -1,6 +1,6 @@
 {
   "name": "hkrnews.com",
-  "description": "hkrnews.com",
+  "description": "hkrnews.com shows news.ycombinator.com link list, comments, and article (via bypasscors) on one page",
   "version": "2.5.0",
   "scripts": {
     "start": "forever --minUptime=10 --spinSleepTime=2000 -e ~/hkrnews.log -o ~/hkrnews.log -a -v -w .",
