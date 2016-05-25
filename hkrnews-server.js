@@ -1,9 +1,14 @@
 var http = require('http'), fs = require('fs'), urlparse = require('url');
 
-http.createServer(function (req,res) {
+var app = function (req,res) {
 	var url = urlparse.parse(req.url);
 
-   	res.writeHead(200,{"Cache-Control": "public, max-age=" + 0* 1000 * 3600 });
+   	res.writeHead(200,{
+   		"Cache-Control": "public, max-age=" +  1000 * 3600, 
+   		"Access-Control-Allow-Origin": "*"  //enable external domains to scrape hkrnews.com
+   });
+
+
 
 	if (url.pathname == "/get"){
 		var corsURL = url.query.replace("url=","");
@@ -26,7 +31,7 @@ http.createServer(function (req,res) {
 		    });
 		    response.on('end', function() {
 		    	//spoof the base-url for relative paths on the target page
-				html = (html||"").replace(/<head[^>]*>/i, "<head><base  target='_blank' href='" + corsURL.protocol + "//" + corsURL.host + "/'>")
+				html = (html||"").replace(/<head[^>]*>/i, "<head><base href='" + corsURL.protocol + "//" + corsURL.host + "/'>")
 				  	
 			    res.write(html);
 				res.end();
@@ -41,14 +46,25 @@ http.createServer(function (req,res) {
 		res.end();
 
 	} else {
-		fs.createReadStream("index.html").pipe(res, {end: true});;
+		fs.createReadStream("hkrnews-interface.html").pipe(res, {end: true});;
 
-		console.log("Connection: "+req.connection.remoteAddress + " " + req.headers['user-agent'] )
+		console.log("Connection: "+req.connection.remoteAddress + " " + req.headers['user-agent'] + new Date().toLocaleString())
 
 
 	}
 
 
-}).listen(80, function(){
+}
+
+
+http.createServer(app).listen(80, function(){
 	console.log("SERVER STARTED " + new Date().toLocaleString());
 })
+
+
+
+//https 
+require('https').createServer({
+    cert: fs.readFileSync('../letsencrypt/live/hkrnews.com/fullchain.pem'),
+      key: fs.readFileSync('../letsencrypt/live/hkrnews.com/privkey.pem')
+  },app).listen(443)
