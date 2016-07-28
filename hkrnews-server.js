@@ -4,7 +4,7 @@ var app = function (req,res) {
 	var url = urlparse.parse(req.url);
 
    	res.writeHead(200,{
-   		"Cache-Control": "public, max-age=" +  1000 * 3600, 
+   		//"Cache-Control": "public, max-age=" +  1000 * 3600, 
    		"Access-Control-Allow-Origin": "*"  //enable external domains to scrape hkrnews.com
    });
 
@@ -57,7 +57,7 @@ var app = function (req,res) {
 }
 
 
-http.createServer(app).listen(80, function(){
+http.createServer(app).listen(1337, function(){
 	console.log("SERVER STARTED " + new Date().toLocaleString());
 })
 
@@ -67,4 +67,4 @@ http.createServer(app).listen(80, function(){
 require('https').createServer({
     cert: fs.readFileSync('../letsencrypt/live/hkrnews.com/fullchain.pem'),
       key: fs.readFileSync('../letsencrypt/live/hkrnews.com/privkey.pem')
-  },app).listen(443)
+  },app).listen(13370)
