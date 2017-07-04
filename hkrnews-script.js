@@ -4,7 +4,7 @@ var pageCount = 5;
 
 $(document).ready(function() {
 
-	
+
 
 	loadIndex();
 
@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 				$("#article")[0].contentWindow.focus();
 
-			if (window.disablejs) 
+			if (window.disablejs)
 
 				$("#index").focus()
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 		}
 
-	   
+
 
 	})
 
@@ -57,14 +57,14 @@ $(document).ready(function() {
 	$(".share").click(function () {
 
 		var url = $("#article").attr("src").split("url=")[1];
-		
+
 
 		$('<input type="text" id="copy-temp" style="opacity: 0;  position: absolute;"/>' )
 			.val(url).appendTo("body")
 		$("#copy-temp").select();
 
      	document.execCommand('copy');
-	    
+
 	  	$("#copy-temp").remove();
 
 
@@ -73,7 +73,7 @@ $(document).ready(function() {
 	$(".opentab").click(function () {
 
 		var url = $("#article").attr("src").split("url=")[1];
-	
+
 	   window.open( url );
 
 	})
@@ -82,7 +82,7 @@ $(document).ready(function() {
 	$(".noscript").click(function () {
 
 		window.disablejs = !($('iframe').attr('sandbox').indexOf("scripts")==-1);
-		
+
 		$('iframe').attr('sandbox',"allow-same-origin" + (disablejs ?  "" : " allow-scripts" ));
 
 
@@ -115,8 +115,8 @@ function loadIndex(nextPageURL) {
 
 		if (--pageCount)
 			loadIndex($(data).find("a[href*='news?p']").attr('href'))
-		
-		
+
+
 
 		if (!nextPageURL) //click first link
 	 		$(".link-div:first").mousedown();
@@ -127,23 +127,27 @@ function loadIndex(nextPageURL) {
 function loadArticle(e) {
 
 	//clear cookies
-	 var cookies = document.cookie.split(";");
 
-   	for (var i = 0; i < cookies.length; i++) {
-    	  var cookie = cookies[i];
-    	  var eqPos = cookie.indexOf("=");
-    	  var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    	  document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    	}
+	var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+    	var cookie = cookies[i];
+    	var eqPos = cookie.indexOf("=");
+    	var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    	document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
 
 	if (e.which && e.which != 1){
 		window.open($(this).data("url"));
 		return;
 	}
-	
+
 	var storyURL = $(this).data("url"),
 	commentsURL= $(this).data("com");
 	var cont = $("#comments-container");
+
+	if (storyURL.indexOf('://') == -1)
+		storyURL = false;
 
 	cont.empty();
 
@@ -160,8 +164,9 @@ function loadArticle(e) {
 
 	if ($("iframe")[0].contentWindow.window.length) //if iframe is accessible
 		$('#article').contents().find('body').empty();
-	
-	$('#article').attr("src", '/get?url=' + storyURL);
+
+	if(storyURL)
+		$('#article').attr("src", '/get?url=' + storyURL);
 
 	$("#comments").scrollTop(0);
 
@@ -205,7 +210,7 @@ function loadArticle(e) {
 }
 
 function toggleComments() {
-	var e = $(this);	
+	var e = $(this);
 
 	if (e.hasClass( "minus") ) {
 
@@ -248,11 +253,11 @@ function keyDownHandler(e) {
 	var key = e.keyCode;
 
 	//next
-	if ([39,74].indexOf(key)>-1) 
+	if ([39,74].indexOf(key)>-1)
 	 	$(".cur+.link-div, .link-div:first").last().mousedown();
 
 
-	if ([37,75].indexOf(key)>-1) 
+	if ([37,75].indexOf(key)>-1)
 		$(".cur").prev().mousedown()
 
 	if(key==113)
