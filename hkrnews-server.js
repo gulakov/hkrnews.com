@@ -6,12 +6,15 @@ var app = function (req,res) {
 
 
 
-
 	if (url.pathname == "/get"){
-		var corsURL = url.query.replace("url=","");
-		corsURL =  urlparse.parse(corsURL);
+		
+		var corsURL = url.query && url.query.replace("url=","");
+		
+		if(!corsURL)
+			return res.end();
 
-
+	        corsURL =  urlparse.parse(corsURL);
+	
 		require(corsURL.protocol.slice(0,-1)).request({
 		    host: corsURL.host,
 		    path: corsURL.path,
@@ -21,9 +24,6 @@ var app = function (req,res) {
 				'user-agent': req.headers['user-agent']
 			  }
 		}, function(response) {
-
-	console.log(response.headers)
-							console.log(response.headers['content-encoding'])
 
 			var html = '';
 
