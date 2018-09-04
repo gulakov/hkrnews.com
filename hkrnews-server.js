@@ -91,11 +91,3 @@ var app = function (req,res) {
 http.createServer(app).listen(1337, function(){
 	console.log("SERVER STARTED " + new Date().toLocaleString());
 })
-
-
-
-//https
-require('https').createServer({
-    cert: fs.readFileSync('../letsencrypt/live/hkrnews.com/fullchain.pem'),
-      key: fs.readFileSync('../letsencrypt/live/hkrnews.com/privkey.pem')
-  },app).listen(13370)
